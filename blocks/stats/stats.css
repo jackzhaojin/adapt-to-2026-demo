@@ -1,0 +1,150 @@
+/* ==========================================================================
+   Stats — Wild Trails Journal trail-highlight band
+   A horizontal band of statistics: a large Playfair value (with a small muted
+   unit) over an uppercase, letter-spaced moss label. Subtle vertical gradient
+   dividers between stats on tablet/desktop; 2-up on mobile. Re-themes via the
+   global CSS custom properties; the `forest` variation forces a solid
+   forest-green band with light text on any page theme.
+   ========================================================================== */
+
+.stats {
+  /* block-local tokens — flipped by the forest variation below */
+  --stats-value-color: var(--heading-color);
+  --stats-label-color: var(--secondary-color);
+  --stats-unit-color: var(--dark-color);
+  --stats-divider-color: color-mix(in srgb, var(--secondary-color) 30%, transparent);
+  --stats-gap: 24px;
+
+  border-block: 1px solid var(--stats-divider-color);
+  padding-block: 28px;
+}
+
+/* optional band title with a short accent underline */
+.stats .stats-title {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.stats .stats-title :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0;
+}
+
+.stats .stats-title::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 3px;
+  margin: 12px auto 0;
+  border-radius: 999px;
+  background-color: var(--stats-label-color);
+  opacity: 0.5;
+}
+
+/* layout: 2-up on mobile */
+.stats .stats-band {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--stats-gap);
+  align-items: start;
+}
+
+.stats .stats-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.stats .stats-value {
+  color: var(--stats-value-color);
+  font-family: var(--heading-font-family);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.stats .stats-unit {
+  color: var(--stats-unit-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.stats .stats-label {
+  margin-top: 2px;
+  color: var(--stats-label-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* tablet and up: one horizontal row with vertical gradient dividers */
+@media (width >= 600px) {
+  .stats .stats-band {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
+
+  .stats .stats-value {
+    font-size: 36px;
+  }
+
+  .stats .stats-item:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: calc(var(--stats-gap) / -2);
+    top: 50%;
+    width: 1px;
+    height: 48px;
+    transform: translateY(-50%);
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--stats-divider-color),
+      transparent
+    );
+  }
+}
+
+@media (width >= 900px) {
+  .stats {
+    --stats-gap: 40px;
+  }
+
+  .stats .stats-value {
+    font-size: 44px;
+  }
+}
+
+/* --- forest variation: solid green band, light text ---------------------- */
+.stats.forest {
+  --stats-value-color: #fff;
+  --stats-label-color: #b0cdbb;          /* light moss */
+  --stats-unit-color: #b0cdbb;
+  --stats-divider-color: color-mix(in srgb, #b0cdbb 35%, transparent);
+
+  border: 0;
+  border-radius: 24px;
+  padding: 40px 24px;
+  background-color: var(--forest-color);
+  box-shadow: 0 10px 30px -12px rgb(23 49 36 / 35%);
+  color: #e7eee8;
+}
+
+.stats.forest .stats-title :is(h1, h2, h3, h4, h5, h6) {
+  color: #fff;
+}
+
+@media (width >= 900px) {
+  .stats.forest {
+    padding: 56px 48px;
+  }
+}

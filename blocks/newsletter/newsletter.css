@@ -1,0 +1,216 @@
+/*
+ * Newsletter CTA — a fixed forest-green band that reads on any page theme.
+ * The band colour is intentionally hard-set to --forest-color (not the page
+ * background), so the input/button overrides below give reliable contrast.
+ */
+
+.newsletter {
+  /* re-point the global primary-button vars so .button.primary renders as a
+     light, contrasting pill on the dark band regardless of the page theme */
+  --button-primary-bg: var(--paper-color);
+  --button-primary-bg-hover: var(--surface-color);
+  --button-primary-text: var(--forest-color);
+  --newsletter-field-height: 52px;
+
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 40px 24px;
+  background-color: var(--forest-color);
+  color: var(--surface-color);
+  box-shadow: 0 18px 40px -16px rgb(23 49 36 / 28%);
+}
+
+.newsletter-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  text-align: center;
+}
+
+/* text column */
+.newsletter-text {
+  max-width: 36rem;
+}
+
+.newsletter .newsletter-heading {
+  margin: 0;
+  color: var(--surface-color);
+  font-size: var(--heading-font-size-xl);
+  line-height: 1.15;
+}
+
+.newsletter-supporting {
+  margin-top: 12px;
+  color: rgb(255 255 255 / 80%);
+  font-size: var(--body-font-size-s);
+  line-height: 1.6;
+}
+
+.newsletter-supporting > :first-child { margin-top: 0; }
+.newsletter-supporting > :last-child { margin-bottom: 0; }
+
+.newsletter-supporting a {
+  color: var(--surface-color);
+  text-decoration: underline;
+}
+
+/* action column / form */
+.newsletter-action {
+  width: 100%;
+  max-width: 30rem;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+
+.newsletter-field {
+  position: relative;
+  flex: 1 1 auto;
+}
+
+/* visually hidden but available to assistive tech */
+.newsletter-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.newsletter-icon {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  display: inline-flex;
+  color: rgb(255 255 255 / 55%);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.newsletter-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--newsletter-field-height);
+  padding: 0 16px 0 44px;
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 999px;
+  background-color: rgb(255 255 255 / 10%);
+  color: var(--surface-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.newsletter-input::placeholder {
+  color: rgb(255 255 255 / 50%);
+}
+
+.newsletter-input:focus-visible {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px rgb(244 223 203 / 75%);
+}
+
+.newsletter .newsletter-submit {
+  min-height: var(--newsletter-field-height);
+  padding-inline: 1.75rem;
+  font-weight: 600;
+}
+
+.newsletter-confirmation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--surface-color);
+  font-size: var(--body-font-size-s);
+  font-weight: 600;
+}
+
+/* the flex display above would otherwise defeat the [hidden] attribute, so the
+   inline confirmation stays visible before submit — keep it hidden until then */
+.newsletter-confirmation[hidden] {
+  display: none;
+}
+
+.newsletter-confirmation::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  background: no-repeat center / contain
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4dfcb' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+}
+
+/* tablet/desktop: roomier band, inline form on the default (centered) layout */
+@media (width >= 600px) {
+  .newsletter {
+    border-radius: 28px;
+    padding: 56px 40px;
+  }
+
+  .newsletter .newsletter-heading {
+    font-size: var(--heading-font-size-xxl);
+  }
+
+  .newsletter-supporting {
+    font-size: var(--body-font-size-m);
+  }
+
+  .newsletter-form {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .newsletter .newsletter-submit {
+    flex: 0 0 auto;
+  }
+}
+
+@media (width >= 900px) {
+  .newsletter {
+    padding: 72px 64px;
+  }
+}
+
+/*
+ * Split variant — text left, form right on desktop; stacked on mobile.
+ * The form stays a single vertical stack inside the narrower right column.
+ */
+@media (width >= 900px) {
+  .newsletter.split .newsletter-content {
+    flex-direction: row;
+    align-items: center;
+    gap: 56px;
+    text-align: left;
+  }
+
+  .newsletter.split .newsletter-text {
+    flex: 1 1 auto;
+    max-width: none;
+  }
+
+  .newsletter.split .newsletter-action {
+    flex: 0 0 auto;
+    width: min(24rem, 42%);
+  }
+
+  .newsletter.split .newsletter-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .newsletter.split .newsletter-submit {
+    width: 100%;
+  }
+}

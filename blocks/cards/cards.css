@@ -1,27 +1,277 @@
+/* ==========================================================================
+   Cards — Wild Trails Journal feature/trail cards
+   White card surface, 16px radius, soft forest-tinted shadow, image on top,
+   moss category chip, Playfair headline, slate meta/excerpt, "Read story →"
+   link, hover lift. Re-themes via the global CSS custom properties.
+   ========================================================================== */
+
 .cards > ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
   gap: 24px;
+  grid-template-columns: 1fr;
 }
 
-.cards > ul > li {
-  border: 1px solid #dadada;
-  background-color: var(--background-color);
+@media (width >= 600px) {
+  .cards > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.cards .cards-card-body {
-  margin: 16px;
+@media (width >= 900px) {
+  .cards > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
+@media (width >= 1200px) {
+  /* allow a 4th column on ultra-wide while keeping a comfortable min width */
+  .cards > ul {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+/* --- card shell --------------------------------------------------------- */
+.cards .cards-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--forest-color) 8%, transparent);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px -12px rgb(23 49 36 / 18%);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* the card surface is always white (--surface-color never re-themes), so lock
+     the interior text palette to the light-surface colours — otherwise a forest
+     page repaints the title/excerpt/chip light and they vanish on the white card */
+  --heading-color: #173124;
+  --text-color: #111c2c;
+  --dark-color: #424844;
+  --secondary-color: #4a654a;
+  --link-color: #2d4739;
+  --link-hover-color: #173124;
+}
+
+/* --- image -------------------------------------------------------------- */
 .cards .cards-card-image {
   line-height: 0;
+  overflow: hidden;
 }
 
-.cards > ul > li img {
+.cards .cards-card-image picture {
+  display: block;
+}
+
+.cards .cards-card img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+/* --- body --------------------------------------------------------------- */
+.cards .cards-card-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px;
+}
+
+.cards .cards-card-body > * {
+  margin: 0;
+}
+
+/* category chip — moss, full pill, uppercase Inter */
+.cards .cards-card-category {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--secondary-color) 14%, transparent);
+  color: var(--secondary-color);
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* headline — Playfair, tight tracking, forest heading colour */
+.cards .cards-card-title {
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-l);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--heading-color);
+  transition: color 0.2s ease;
+}
+
+/* meta line — "8.2 mi · Hard · Sierra Nevada" */
+.cards .cards-card-meta {
+  font-family: var(--body-font-family);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--dark-color);
+}
+
+/* excerpt — slate body copy */
+.cards .cards-card-excerpt {
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  line-height: 1.55;
+  color: var(--dark-color);
+
+  /* keep grid rows even by clamping long copy */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+/* read story link — moss, animated arrow, stretched over the card */
+.cards .cards-card-link {
+  margin-top: auto;
+  padding-top: 4px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.cards .cards-card-link::after {
+  content: " →";
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+/* stretched link: one tab stop, whole-card click target */
+.cards .cards-card-has-link .cards-card-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Variant: feature — 2-up, larger imagery, more prominent headline
+   ========================================================================== */
+@media (width >= 900px) {
+  .cards.feature > ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}
+
+.cards.feature .cards-card-body {
+  gap: 14px;
+  padding: 28px 32px 32px;
+}
+
+.cards.feature .cards-card-title {
+  font-size: var(--heading-font-size-xl);
+}
+
+.cards.feature .cards-card-excerpt {
+  font-size: var(--body-font-size-s);
+  line-height: 1.6;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+}
+
+.cards.feature .cards-card-link {
+  font-size: var(--body-font-size-s);
+}
+
+/* ==========================================================================
+   Variant: compact — denser 3/4-up, smaller type, tighter cards
+   ========================================================================== */
+.cards.compact > ul {
+  gap: 16px;
+}
+
+@media (width >= 600px) {
+  .cards.compact > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .cards.compact > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (width >= 1200px) {
+  .cards.compact > ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.cards.compact .cards-card {
+  border-radius: 12px;
+}
+
+.cards.compact .cards-card img {
+  aspect-ratio: 4 / 3;
+}
+
+.cards.compact .cards-card-body {
+  gap: 8px;
+  padding: 14px;
+}
+
+.cards.compact .cards-card-category {
+  padding: 3px 10px;
+  font-size: 11px;
+}
+
+.cards.compact .cards-card-title {
+  font-size: var(--heading-font-size-m);
+}
+
+.cards.compact .cards-card-excerpt {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* ==========================================================================
+   Interaction states — declared last so they layer over base + variants
+   ========================================================================== */
+.cards .cards-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px -14px rgb(23 49 36 / 28%);
+}
+
+/* keyboard focus on the stretched link surfaces a ring on the whole card */
+.cards .cards-card:focus-within {
+  outline: 2px solid var(--link-color);
+  outline-offset: 2px;
+}
+
+.cards .cards-card:hover img {
+  transform: scale(1.05);
+}
+
+.cards .cards-card:hover .cards-card-title {
+  color: var(--secondary-color);
+}
+
+.cards .cards-card:hover .cards-card-link {
+  color: var(--link-hover-color);
+}
+
+.cards .cards-card:hover .cards-card-link::after {
+  transform: translateX(4px);
 }

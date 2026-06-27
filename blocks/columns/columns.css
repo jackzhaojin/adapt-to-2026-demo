@@ -1,12 +1,16 @@
+/*
+ * Columns — balanced image + text editorial block (Wilderness Path).
+ * Default:   image left / text right on desktop; stacked image-first on mobile.
+ * .reverse:  image right / text left on desktop; still image-first on mobile.
+ */
+
 .columns > div {
   display: flex;
   flex-direction: column;
+  gap: 24px;
 }
 
-.columns img {
-  width: 100%;
-}
-
+/* keep the image first when stacked on mobile, regardless of authored order */
 .columns > div > div {
   order: 1;
 }
@@ -15,19 +19,68 @@
   order: 0;
 }
 
-.columns > div > .columns-img-col img {
+/* image: large rounded crop with a soft, forest-tinted shadow */
+.columns .columns-img-col picture {
   display: block;
 }
 
+.columns .columns-img-col img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 10px 30px -12px rgb(23 49 36 / 18%);
+}
+
+/* text column: vertical rhythm for eyebrow / headline / body / button */
+.columns .columns-text-col > * {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.columns .columns-text-col > *:last-child {
+  margin-bottom: 0;
+}
+
+/* eyebrow label: uppercase moss Inter kicker above the headline */
+.columns .columns-eyebrow {
+  margin-bottom: 8px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+}
+
+/* push the call-to-action away from the body copy */
+.columns .columns-text-col .button-container {
+  margin-top: 24px;
+}
+
+/* tablet and up: side-by-side, vertically centered, generous gap */
 @media (width >= 900px) {
   .columns > div {
+    flex-direction: row;
     align-items: center;
-    flex-direction: unset;
-    gap: 24px;
+    gap: 48px;
   }
 
   .columns > div > div {
     flex: 1;
     order: unset;
+  }
+
+  /* reverse variant: flip the image to the right, text to the left */
+  .columns.reverse > div {
+    flex-direction: row-reverse;
+  }
+}
+
+@media (width >= 1200px) {
+  .columns > div {
+    gap: 64px;
   }
 }
