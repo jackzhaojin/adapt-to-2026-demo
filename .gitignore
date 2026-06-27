@@ -9,6 +9,10 @@ helix-importer-ui
 .idea
 *.code-workspace
 
+# Playwright debug artifacts (screenshots, snapshots, traces, console logs)
+.playwright-cli/
+.playwright-mcp/
+
 # Ensure these files are tracked
 !CLAUDE.md
 !AGENTS.md

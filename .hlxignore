@@ -7,3 +7,5 @@ package-lock.json
 test/*
 *.code-workspace
 .claude/skills
+.playwright-cli/
+.playwright-mcp/
