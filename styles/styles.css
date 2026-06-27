@@ -40,6 +40,9 @@
 
   /* nav height */
   --nav-height: 64px;
+
+  /* layout */
+  --content-width: 720px; /* comfortable reading measure for default content */
 }
 
 /* fallback fonts (size-adjust reduces CLS while web fonts load) */
@@ -312,6 +315,11 @@ main > .section > div {
   max-width: 1200px;
   margin: auto;
   padding: 0 20px;
+}
+
+/* default content reads as a focused, centered journal column */
+main > .section > .default-content-wrapper {
+  max-width: var(--content-width);
 }
 
 main > .section:first-of-type {
