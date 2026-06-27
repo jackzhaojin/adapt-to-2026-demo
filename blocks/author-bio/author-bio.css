@@ -1,0 +1,170 @@
+/* Author Bio — soft surface card, circular avatar, Playfair name, moss accents.
+   Themeable via the global custom properties (re-themes for free on forest/white). */
+
+.author-bio {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  max-width: 880px;
+  margin-inline: auto;
+  padding: 24px;
+  border-radius: 16px;
+  background-color: var(--surface-color);
+  box-shadow: 0 10px 30px -12px rgb(23 49 36 / 18%);
+
+  /* the card surface is always white (--surface-color never re-themes), so lock
+     the interior text palette to the light-surface colours — otherwise a forest
+     page repaints the name/bio/eyebrow light and they vanish on the white card */
+  --heading-color: #173124;
+  --text-color: #111c2c;
+  --dark-color: #424844;
+  --secondary-color: #4a654a;
+}
+
+/* Avatar — circular, cover-cropped, with a soft moss ring */
+.author-bio .author-bio-avatar {
+  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--secondary-color) 22%, var(--surface-color)),
+    0 8px 18px -8px rgb(23 49 36 / 30%);
+}
+
+.author-bio .author-bio-avatar picture {
+  display: block;
+  line-height: 0;
+  height: 100%;
+}
+
+.author-bio .author-bio-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Body */
+.author-bio .author-bio-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.author-bio .author-bio-eyebrow {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+}
+
+.author-bio .author-bio-name {
+  margin: 6px 0 0;
+  font-size: var(--heading-font-size-xl);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+
+.author-bio .author-bio-role {
+  margin: 6px 0 0;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 500;
+  color: var(--dark-color);
+}
+
+.author-bio .author-bio-bio {
+  margin: 16px 0 0;
+  max-width: 60ch;
+  font-size: var(--body-font-size-s);
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+/* Social links — small moss pill links */
+.author-bio .author-bio-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.author-bio .author-bio-social li {
+  margin: 0;
+}
+
+.author-bio .author-bio-social-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background-color: color-mix(in srgb, var(--secondary-color) 12%, transparent);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--secondary-color);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.author-bio .author-bio-social-link:hover,
+.author-bio .author-bio-social-link:focus-visible {
+  background-color: var(--secondary-color);
+  color: var(--surface-color);
+  text-decoration: none;
+}
+
+/* Default variant goes horizontal once there's room (avatar left, body right) */
+@media (width >= 600px) {
+  .author-bio:not(.center) {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+    padding: 32px;
+  }
+
+  .author-bio:not(.center) .author-bio-avatar {
+    width: 128px;
+    height: 128px;
+  }
+}
+
+@media (width >= 900px) {
+  .author-bio:not(.center) .author-bio-avatar {
+    width: 144px;
+    height: 144px;
+  }
+}
+
+/* Center variant — circular avatar on top, everything centered */
+.author-bio.center {
+  align-items: center;
+  max-width: 560px;
+  text-align: center;
+}
+
+.author-bio.center .author-bio-avatar {
+  width: 128px;
+  height: 128px;
+}
+
+.author-bio.center .author-bio-body {
+  align-items: center;
+}
+
+.author-bio.center .author-bio-bio {
+  margin-inline: auto;
+}
+
+.author-bio.center .author-bio-social {
+  justify-content: center;
+}

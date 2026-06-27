@@ -10,3 +10,4 @@ test/*
 .claude/skills
 .playwright-cli/
 .playwright-mcp/
+drafts/*

@@ -1,37 +1,218 @@
+/*
+ * Hero — full-bleed photo with a forest-tinted scrim and overlaid journal content.
+ * Variants:
+ *   (default) centered overlay
+ *   .left     content anchored to a bottom-left column
+ *   .minimal  image-less solid forest band, for section intros
+ */
+
+.hero.block {
+  position: relative;
+  isolation: isolate; /* own stacking context for bg / scrim / content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  padding: 64px 24px;
+  overflow: hidden;
+  background-color: var(--forest-color); /* fallback behind the image */
+  color: #fff;
+  text-align: center;
+}
+
+/* full-bleed: cancel the section wrapper's max-width + gutter */
 .hero-container .hero-wrapper {
   max-width: unset;
   padding: 0;
 }
 
-.hero {
-  position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
-}
-
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-}
-
-.hero picture {
+/* background image layer */
+.hero .hero-bg {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
 }
 
-.hero img {
-  object-fit: cover;
+.hero .hero-bg picture,
+.hero .hero-bg img {
+  display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+}
+
+/* legibility scrim — forest-tinted, darkest toward the bottom */
+.hero.hero-has-image::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgb(23 49 36 / 88%) 0%,
+    rgb(23 49 36 / 55%) 38%,
+    rgb(23 49 36 / 20%) 100%
+  );
+}
+
+/* overlaid content column */
+.hero .hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* eyebrow / category chip */
+.hero .hero-eyebrow {
+  display: inline-flex;
+  align-self: center;
+  align-items: center;
+  margin: 0;
+  border: 1px solid rgb(255 255 255 / 35%);
+  border-radius: 9999px;
+  padding: 7px 16px;
+  background: rgb(255 255 255 / 12%);
+  backdrop-filter: blur(6px);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+/* headline */
+.hero .hero-title {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: clamp(2.4rem, 5vw + 1rem, 4.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+/* subtitle */
+.hero .hero-subtitle {
+  max-width: 36ch;
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m);
+  line-height: 1.6;
+  color: rgb(255 255 255 / 90%);
+}
+
+.hero .hero-subtitle em {
+  font-style: italic;
+}
+
+/* meta line — author · date */
+.hero .hero-meta {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 75%);
+}
+
+/* call-to-action buttons */
+.hero .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.hero .hero-actions .button-wrapper {
+  margin: 0;
+}
+
+.hero .hero-actions .button {
+  padding: 0.7em 1.6em;
+  font-weight: 600;
+}
+
+/* secondary CTA reads as a light ghost on the dark hero */
+.hero .hero-actions .button.secondary {
+  border-color: rgb(255 255 255 / 60%);
+  background: transparent;
+  color: #fff;
+}
+
+.hero .hero-actions .button.secondary:hover,
+.hero .hero-actions .button.secondary:focus-visible {
+  border-color: #fff;
+  background: #fff;
+  color: var(--forest-color);
+}
+
+/* ---- variant: left-aligned column ---- */
+.hero.left {
+  align-items: flex-end;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.hero.left .hero-content {
+  align-items: flex-start;
+  max-width: 620px;
+  margin: 0;
+}
+
+.hero.left .hero-actions {
+  justify-content: flex-start;
+}
+
+/* ---- variant: minimal (image-less forest band) ---- */
+.hero.minimal {
+  min-height: 0;
+  padding: 56px 24px;
+  background-color: var(--forest-color);
+  color: #fff;
+
+  /* flip the primary button to a light fill so it reads on forest green */
+  --button-primary-bg: #fff;
+  --button-primary-bg-hover: #d7e3da;
+  --button-primary-text: var(--forest-color);
+}
+
+.hero.minimal .hero-content {
+  max-width: 720px;
+  gap: 16px;
+}
+
+@media (width >= 600px) {
+  .hero.block {
+    padding: 80px 32px;
+  }
 }
 
 @media (width >= 900px) {
-  .hero {
-    padding: 40px 32px;
+  .hero.block {
+    min-height: 82vh;
+    padding: 96px 32px;
+  }
+
+  .hero .hero-content {
+    gap: 22px;
+    max-width: 820px;
+  }
+
+  .hero .hero-subtitle {
+    font-size: 1.35rem;
+  }
+
+  .hero.minimal {
+    min-height: 0;
+    padding: 72px 32px;
   }
 }
