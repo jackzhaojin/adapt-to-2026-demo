@@ -11,15 +11,25 @@
  */
 
 :root {
-  /* colors — "Wilderness Path" (Stitch) */
-  --background-color: #f5f0e9; /* Earthy Tan paper, Level 0 base */
-  --light-color: #fff;         /* white card surface / light sections */
+  /* brand surfaces — "Wilderness Path" elevation tiers */
+  --paper-color: #f5f0e9;      /* Level 0: Earthy Tan paper (page base) */
+  --surface-color: #fff;       /* Level 1: white card/section surface */
+  --forest-color: #2d4739;     /* Level 2: forest-green feature band */
+
+  /* colors */
+  --background-color: var(--paper-color); /* default page background */
+  --light-color: var(--surface-color);    /* light sections / code / cards */
   --dark-color: #424844;       /* muted slate (on-surface-variant), meta text */
   --text-color: #111c2c;       /* near-black slate (on-surface), body text */
   --heading-color: #173124;    /* dark forest green (primary), headings */
   --link-color: #2d4739;       /* forest green */
   --link-hover-color: #173124; /* darker forest green */
   --secondary-color: #4a654a;  /* moss */
+
+  /* primary button (themeable for contrast on dark backgrounds) */
+  --button-primary-bg: var(--link-color);
+  --button-primary-bg-hover: var(--link-hover-color);
+  --button-primary-text: #fff;
 
   /* fonts */
   --body-font-family: 'Inter', inter-fallback, sans-serif;
@@ -68,6 +78,40 @@
     --heading-font-size-s: 20px;
     --heading-font-size-xs: 18px;
   }
+}
+
+/*
+ * Page themes — set per page via the "Theme" metadata.
+ * decorateTemplateAndTheme() adds the theme value as a class on <body>.
+ * Each theme only re-points the color custom properties, so headings,
+ * body, links and buttons re-theme automatically.
+ *   (default / no metadata) ... paper (warm tan editorial base)
+ *   Theme: white .............. clean white surface
+ *   Theme: paper .............. explicit warm tan (same as default)
+ *   Theme: forest ............. dark immersive forest green
+ */
+body.white {
+  --background-color: var(--surface-color);
+}
+
+body.paper {
+  --background-color: var(--paper-color);
+}
+
+body.forest {
+  --background-color: var(--forest-color);
+  --text-color: #e7eee8;       /* warm off-white */
+  --heading-color: #fff;
+  --link-color: #b0cdbb;       /* light moss (inverse primary) */
+  --link-hover-color: #fff;
+  --secondary-color: #b0cdbb;
+  --light-color: #36513f;      /* slightly lifted forest for inner surfaces */
+  --dark-color: #c2c8c2;
+
+  /* primary button flips to a light fill so it reads on the dark base */
+  --button-primary-bg: #fff;
+  --button-primary-bg-hover: var(--link-color);
+  --button-primary-text: var(--forest-color);
 }
 
 body {
@@ -210,18 +254,18 @@ button.button:disabled {
 
 a.button.primary,
 button.button.primary {
-  border-color: var(--link-color);
-  background-color: var(--link-color);
-  color: #fff;
+  border-color: var(--button-primary-bg);
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
 }
 
 a.button.primary:hover,
 a.button.primary:focus-visible,
 button.button.primary:hover,
 button.button.primary:focus-visible {
-  border-color: var(--link-hover-color);
-  background-color: var(--link-hover-color);
-  color: #fff;
+  border-color: var(--button-primary-bg-hover);
+  background-color: var(--button-primary-bg-hover);
+  color: var(--button-primary-text);
 }
 
 a.button.primary[aria-disabled="true"],
