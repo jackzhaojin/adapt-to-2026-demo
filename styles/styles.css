@@ -148,8 +148,8 @@ h3,
 h4,
 h5,
 h6 {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
+  margin-top: 1.4em;
+  margin-bottom: 0.4em;
   font-family: var(--heading-font-family);
   font-weight: 700;
   line-height: 1.2;
@@ -180,8 +180,18 @@ ol,
 ul,
 pre,
 blockquote {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
+  margin-top: 1.1em;
+  margin-bottom: 0;
+}
+
+/* trim the rhythm at the edges of a default-content column so the section
+   padding/margins own the outer spacing (keeps a relaxed, even cadence) */
+main > .section > .default-content-wrapper > :first-child {
+  margin-top: 0;
+}
+
+main > .section > .default-content-wrapper > :last-child {
+  margin-bottom: 0;
 }
 
 code,
@@ -198,7 +208,7 @@ pre {
 }
 
 main > div {
-  margin: 40px 16px;
+  margin: 56px 16px;
 }
 
 input,
@@ -350,9 +360,9 @@ main img {
   width: 100%;
 }
 
-/* sections */
+/* sections — generous, editorial vertical rhythm (mobile-first) */
 main > .section {
-  margin: 40px 0;
+  margin: 56px 0;
 }
 
 main > .section > div {
@@ -371,15 +381,124 @@ main > .section:first-of-type {
 }
 
 @media (width >= 900px) {
+  /* desktop sections breathe like the Stitch source (~96px between sections) */
+  main > .section {
+    margin: 96px 0;
+  }
+
   main > .section > div {
-    padding: 0 32px;
+    padding: 0 40px;
   }
 }
 
-/* section metadata */
-main .section.light,
-main .section.highlight {
-  background-color: var(--light-color);
+/*
+ * Section styles (authored via a Section Metadata "Style" value).
+ * decorateSectionMetadata() in scripts.js turns the value into a class.
+ */
+
+/* intro — centered eyebrow + heading + divider, hugging the content below it */
+main > .section.intro {
+  margin-bottom: 24px;
+}
+
+main > .section.intro > .default-content-wrapper {
+  max-width: 780px;
+  text-align: center;
+}
+
+main > .section.intro > .default-content-wrapper > p:first-child {
+  margin: 0 0 14px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+}
+
+main > .section.intro > .default-content-wrapper > :is(h1, h2, h3) {
+  margin-top: 0;
+}
+
+main > .section.intro > .default-content-wrapper > :is(h1, h2, h3)::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin: 24px auto 0;
+  border-radius: 2px;
+  background: var(--secondary-color);
+}
+
+main > .section.intro > .default-content-wrapper > p:not(:first-child) {
+  max-width: 60ch;
+  margin-inline: auto;
+  color: var(--dark-color);
+}
+
+@media (width >= 900px) {
+  main > .section.intro {
+    margin-bottom: 40px;
+  }
+}
+
+/* tight — pull a section up close to the one above (e.g. cards under an intro) */
+main > .section.tight {
+  margin-top: 8px;
+}
+
+@media (width >= 900px) {
+  main > .section.tight {
+    margin-top: 16px;
+  }
+}
+
+/* light / highlight — full-bleed tinted band */
+main > .section.light,
+main > .section.highlight {
   margin: 0;
-  padding: 40px 0;
+  padding: 56px 0;
+  background-color: var(--light-color);
+}
+
+/* forest — full-bleed dark immersive band that re-themes its own contents */
+main > .section.forest {
+  --background-color: var(--forest-color);
+  --text-color: #e7eee8;
+  --heading-color: #fff;
+  --secondary-color: #b0cdbb;
+  --link-color: #b0cdbb;
+  --link-hover-color: #fff;
+  --dark-color: #c2c8c2;
+
+  margin: 0;
+  padding: 56px 0;
+  background-color: var(--forest-color);
+  color: var(--text-color);
+}
+
+@media (width >= 900px) {
+  main > .section.light,
+  main > .section.highlight,
+  main > .section.forest {
+    padding: 88px 0;
+  }
+}
+
+/*
+ * Template: article — long-form editorial reading style (Playfair body),
+ * applied page-wide via a "Template: article" metadata value.
+ */
+body.article main > .section > .default-content-wrapper {
+  max-width: var(--content-width);
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.75;
+}
+
+@media (width >= 900px) {
+  body.article main > .section > .default-content-wrapper {
+    font-size: 20px;
+  }
 }

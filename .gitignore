@@ -13,6 +13,9 @@ helix-importer-ui
 .playwright-cli/
 .playwright-mcp/
 
+# Scratchpad for temporary working files (design refs, inspection scripts)
+scratchpad/
+
 # Ensure these files are tracked
 !CLAUDE.md
 !AGENTS.md

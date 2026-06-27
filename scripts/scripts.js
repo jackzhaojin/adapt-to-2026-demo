@@ -10,6 +10,9 @@ import {
   loadSections,
   loadCSS,
   buildBlock,
+  readBlockConfig,
+  toClassName,
+  toCamelCase,
 } from './aem.js';
 
 /**
@@ -118,6 +121,34 @@ function decorateButtons(main) {
 }
 
 /**
+ * Re-adds Section Metadata support, which this project's aem.js omits from
+ * decorateSections. Reads a `Section Metadata` block in each section and applies
+ * its `Style` values as classes (and any other key as a data attribute), then
+ * removes the block. Enables per-section treatments (e.g. intro, tight, forest).
+ * @param {Element} main The main container element
+ */
+function decorateSectionMetadata(main) {
+  main.querySelectorAll(':scope > .section').forEach((section) => {
+    const sectionMeta = section.querySelector(':scope > div > div.section-metadata');
+    if (!sectionMeta) return;
+    const meta = readBlockConfig(sectionMeta);
+    Object.keys(meta).forEach((key) => {
+      if (key === 'style') {
+        meta.style
+          .split(',')
+          .map((style) => toClassName(style.trim()))
+          .filter((style) => style)
+          .forEach((style) => section.classList.add(style));
+      } else {
+        section.dataset[toCamelCase(key)] = meta[key];
+      }
+    });
+    // remove the wrapper that held the section metadata block
+    sectionMeta.parentElement.remove();
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -126,6 +157,7 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  decorateSectionMetadata(main);
   decorateBlocks(main);
   decorateButtons(main);
 }
