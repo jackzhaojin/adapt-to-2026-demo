@@ -1,0 +1,158 @@
+/* Variant rules are grouped by feature (no-header / striped / bordered /
+   forest) for readability rather than by ascending specificity. */
+/* stylelint-disable no-descending-specificity */
+
+/* ==========================================================================
+   Table — Wild Trails Journal editorial data table
+   A clean, ruled comparison table: a small uppercase, letter-spaced moss header
+   over hairline-separated rows, with a subtle hover highlight. Scrolls
+   horizontally on narrow screens so wide tables never break the layout.
+   Re-themes for free via the global custom properties; `striped`, `bordered`,
+   and `no-header` are additive variations, and `forest` forces a solid
+   forest-green card with light text on any page theme.
+   ========================================================================== */
+
+.table {
+  /* block-local tokens — re-pointed by the forest variation below */
+  --table-text-color: var(--text-color);
+  --table-header-color: var(--secondary-color);
+  --table-header-rule: color-mix(in srgb, var(--heading-color) 55%, transparent);
+  --table-row-rule: color-mix(in srgb, var(--text-color) 14%, transparent);
+  --table-stripe-bg: color-mix(in srgb, var(--secondary-color) 8%, transparent);
+  --table-hover-bg: color-mix(in srgb, var(--secondary-color) 13%, transparent);
+
+  width: 100%;
+  margin-block: 28px;
+  overflow-x: auto;
+
+  /* momentum scroll on touch + keeps the scroll affordance subtle */
+  -webkit-overflow-scrolling: touch;
+}
+
+.table table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  color: var(--table-text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  line-height: 1.45;
+}
+
+@media (width >= 600px) {
+  .table table {
+    font-size: var(--body-font-size-s);
+  }
+}
+
+@media (width >= 900px) {
+  .table {
+    margin-block: 36px;
+  }
+}
+
+/* header: small, uppercase, letter-spaced moss labels over a strong rule */
+.table thead th {
+  padding: 10px 16px;
+  border-bottom: 2px solid var(--table-header-rule);
+  color: var(--table-header-color);
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+  vertical-align: bottom;
+}
+
+.table tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--table-row-rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+/* first column reads as the row label in comparison tables */
+.table tbody td:first-child {
+  color: var(--heading-color);
+  font-weight: 600;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.table tbody tr:hover {
+  background-color: var(--table-hover-bg);
+}
+
+/* tighten paragraph spacing inside cells */
+.table th p,
+.table td p {
+  margin: 0;
+}
+
+.table td p + p {
+  margin-top: 0.35em;
+}
+
+/* --- no-header variation: every row is a body row ----------------------- */
+.table.no-header tbody tr:first-child td {
+  border-top: 1px solid var(--table-row-rule);
+}
+
+.table.no-header tbody td:first-child {
+  color: inherit;
+  font-weight: inherit;
+}
+
+/* --- striped variation -------------------------------------------------- */
+.table.striped tbody tr:nth-child(odd) {
+  background-color: var(--table-stripe-bg);
+}
+
+.table.striped tbody tr:hover {
+  background-color: var(--table-hover-bg);
+}
+
+/* --- bordered variation: full grid -------------------------------------- */
+.table.bordered table {
+  border: 1px solid var(--table-row-rule);
+}
+
+.table.bordered th,
+.table.bordered td {
+  border: 1px solid var(--table-row-rule);
+}
+
+.table.bordered tbody tr:last-child td {
+  border-bottom: 1px solid var(--table-row-rule);
+}
+
+/* --- forest variation: solid green card, light text --------------------- */
+.table.forest {
+  --table-text-color: #e7eee8;
+  --table-header-color: #b0cdbb;            /* light moss */
+  --table-header-rule: color-mix(in srgb, #b0cdbb 55%, transparent);
+  --table-row-rule: color-mix(in srgb, #b0cdbb 22%, transparent);
+  --table-stripe-bg: color-mix(in srgb, #fff 6%, transparent);
+  --table-hover-bg: color-mix(in srgb, #fff 9%, transparent);
+
+  padding: 8px 24px;
+  border-radius: 20px;
+  background-color: var(--forest-color);
+  box-shadow: 0 10px 30px -12px rgb(23 49 36 / 35%);
+}
+
+.table.forest tbody td:first-child {
+  color: #fff;
+}
+
+@media (width >= 900px) {
+  .table.forest {
+    padding: 16px 36px;
+  }
+}
