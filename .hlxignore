@@ -12,4 +12,4 @@ test/*
 .playwright-mcp/
 drafts/*
 scratchpad/*
-ghp/*
+docs/*
