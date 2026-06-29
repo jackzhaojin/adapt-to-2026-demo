@@ -1,0 +1,46 @@
+# Publishes the standalone retro demo site in /ghp to GitHub Pages.
+# This is independent of AEM Edge Delivery / aem-code-sync; the /ghp folder
+# is excluded from EDS via .hlxignore and is never served by aem.live.
+#
+# One-time setup: Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
+# (A custom folder name like /ghp cannot be served by the "Deploy from a branch"
+#  option, which only allows the repo root or /docs -- hence this workflow.)
+name: Deploy GitHub Pages (ghp)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ghp/**'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+# Allow the workflow to publish to Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; don't cancel an in-progress run.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload the /ghp folder as the Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./ghp
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
