@@ -5,6 +5,22 @@ Your project's description...
 - Preview: https://main--{repo}--{owner}.aem.page/
 - Live: https://main--{repo}--{owner}.aem.live/
 
+## Demo: legacy travel blog on GitHub Pages (`/ghp`)
+
+The `/ghp` folder is a **standalone, retro (circa 2002–2004) travel blog** —
+"Katie's Travel Journal" — used as the "before" artifact in a migration demo
+(an old hand-coded site we later migrate *into* AEM Edge Delivery Services). It
+is plain HTML/CSS with **no Adobe/EDS code**, is excluded from EDS code-sync via
+`.hlxignore`, and is published separately to GitHub Pages.
+
+To publish it after merging to `main`:
+1. Go to **Settings → Pages → Build and deployment → Source: "GitHub Actions"**.
+   (A custom folder name like `/ghp` can't use "Deploy from a branch", which only
+   allows the repo root or `/docs`; the `.github/workflows/deploy-pages.yml`
+   workflow uploads `/ghp` instead.)
+2. Push/merge to `main` — the workflow deploys the site and prints its URL
+   (typically `https://{owner}.github.io/{repo}/`).
+
 ## Documentation
 
 Before using the aem-boilerplate, we recommand you to go through the documentation on https://www.aem.live/docs/ and more specifically:

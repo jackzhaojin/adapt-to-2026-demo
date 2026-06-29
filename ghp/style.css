@@ -1,0 +1,348 @@
+/* ==========================================================================
+   Katie's Travel Journal  --  retro stylesheet, circa 2003
+   Hand-coded in Notepad. Best viewed in 800x600. Please sign my guestbook!
+   ========================================================================== */
+
+body {
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 16px;
+  color: #000000;
+  margin: 0;
+  padding: 0;
+  /* tiled "parchment dots" background, web-safe */
+  background-color: #ccccaa;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="%23ccccaa"/><circle cx="8" cy="8" r="1.5" fill="%23b3b388"/><circle cx="28" cy="24" r="1.5" fill="%23b3b388"/></svg>');
+}
+
+/* ---- the one true layout table substitute ---------------------------- */
+.page {
+  width: 760px;
+  margin: 12px auto;
+  background-color: #ffffff;
+  border: 4px ridge #808000;
+}
+
+/* ---- banner ---------------------------------------------------------- */
+.banner {
+  background-color: #000080;
+  background-image: linear-gradient(#000080, #003366);
+  color: #ffff00;
+  text-align: center;
+  padding: 8px 6px 10px;
+  border-bottom: 3px groove #c0c0c0;
+}
+
+.banner h1 {
+  margin: 6px 0 2px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 34px;
+  letter-spacing: 1px;
+  color: #ffff00;
+  text-shadow: 2px 2px 0 #800000;
+}
+
+.banner .tagline {
+  margin: 0;
+  color: #00ffff;
+  font-style: italic;
+  font-size: 15px;
+}
+
+.banner img {
+  display: block;
+  margin: 6px auto 0;
+  border: 3px outset #c0c0c0;
+}
+
+/* ---- navbar ---------------------------------------------------------- */
+.navbar {
+  background-color: #008080;
+  border-bottom: 2px groove #c0c0c0;
+  padding: 5px 4px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.navbar a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 2px 8px;
+}
+
+.navbar a:hover {
+  color: #ffff00;
+  text-decoration: underline;
+}
+
+.navbar .sep { color: #99cccc; }
+
+/* ---- the two-column body (content + sidebar) ------------------------- */
+.layout { display: flex; align-items: flex-start; }
+
+.content {
+  flex: 1 1 auto;
+  padding: 14px 18px 20px;
+  min-width: 0;
+}
+
+.sidebar {
+  flex: 0 0 180px;
+  background-color: #ffffcc;
+  border-left: 2px groove #c0c0c0;
+  padding: 12px 10px 18px;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ---- typography ------------------------------------------------------ */
+.content h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  color: #800000;
+  border-bottom: 2px solid #c0c0c0;
+  padding-bottom: 3px;
+  margin-top: 22px;
+}
+
+.content h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000080;
+  margin-bottom: 4px;
+}
+
+.content p { line-height: 1.5; margin: 10px 0; }
+
+a { color: #0000ee; }
+a:visited { color: #551a8b; }
+
+hr {
+  height: 0;
+  border: none;
+  border-top: 2px dotted #808080;
+  margin: 16px 0;
+}
+
+/* a candy-stripe divider for that authentic GeoCities feel */
+.rainbow-rule {
+  height: 6px;
+  border: none;
+  margin: 18px 0;
+  background: repeating-linear-gradient(
+    90deg,
+    #ff0000 0, #ff0000 10px,
+    #ff9900 10px, #ff9900 20px,
+    #ffff00 20px, #ffff00 30px,
+    #00cc00 30px, #00cc00 40px,
+    #0066ff 40px, #0066ff 50px,
+    #6600cc 50px, #6600cc 60px
+  );
+}
+
+/* ---- article bits ---------------------------------------------------- */
+.post-meta {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color: #555555;
+  background-color: #eeeeee;
+  border: 1px solid #cccccc;
+  padding: 4px 8px;
+  margin-bottom: 10px;
+}
+
+.post-photo {
+  float: right;
+  margin: 4px 0 10px 14px;
+  padding: 5px;
+  background-color: #ffffff;
+  border: 3px ridge #c0c0c0;
+  width: 260px;
+}
+
+.post-photo img { display: block; width: 250px; height: auto; }
+.post-photo .caption { font-size: 11px; color: #666666; text-align: center; margin-top: 4px; }
+
+/* beveled "tip / warning" box */
+.tipbox {
+  clear: both;
+  background-color: #ffffcc;
+  border: 3px ridge #cc9900;
+  padding: 8px 12px;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.tipbox.warning { background-color: #ffe6e6; border-color: #cc0000; }
+.tipbox b { color: #800000; }
+
+/* old-school data table */
+table.data {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 14px 0;
+  font-size: 13px;
+}
+
+table.data th {
+  background-color: #000080;
+  color: #ffffff;
+  border: 1px solid #000040;
+  padding: 4px 6px;
+  text-align: left;
+}
+
+table.data td {
+  border: 1px solid #999999;
+  padding: 4px 6px;
+  background-color: #f4f4ff;
+}
+
+table.data tr:nth-child(even) td { background-color: #e6e6ff; }
+
+/* prev / next nav */
+.post-nav {
+  clear: both;
+  margin-top: 22px;
+  padding-top: 8px;
+  border-top: 2px groove #c0c0c0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ---- home page post list -------------------------------------------- */
+.postlist { list-style: none; margin: 0; padding: 0; }
+
+.postlist li {
+  clear: both;
+  overflow: hidden;
+  border-bottom: 1px dashed #999999;
+  padding: 12px 0;
+}
+
+.postlist img {
+  float: left;
+  width: 96px;
+  height: 64px;
+  margin-right: 12px;
+  border: 2px ridge #c0c0c0;
+}
+
+.postlist h3 { margin: 0 0 3px; font-family: Georgia, serif; }
+.postlist h3 a { text-decoration: none; }
+.postlist .date { font-family: Arial, sans-serif; font-size: 11px; color: #777777; }
+.postlist p { margin: 4px 0 0; font-size: 14px; }
+
+/* ---- sidebar widgets ------------------------------------------------- */
+.sidebar h4 {
+  margin: 14px 0 6px;
+  padding: 3px 5px;
+  background-color: #000080;
+  color: #ffff00;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.sidebar ul { list-style: none; margin: 0; padding: 0; }
+.sidebar li { margin: 3px 0; }
+.sidebar a { color: #000080; text-decoration: none; }
+.sidebar a:hover { text-decoration: underline; color: #cc0000; }
+.sidebar .mugshot { display: block; margin: 0 auto 6px; border: 3px ridge #c0c0c0; }
+
+/* hit counter "odometer" */
+.counter {
+  text-align: center;
+  margin: 8px 0;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: #00ff00;
+  background-color: #000000;
+  border: 2px inset #008000;
+  padding: 4px 0;
+}
+
+/* blinking "NEW!" style badge */
+.new-badge {
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #ff0000;
+  padding: 0 4px;
+  border-radius: 2px;
+  vertical-align: middle;
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+/* webring / award badges row */
+.badges {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 11px;
+  font-family: Arial, sans-serif;
+  color: #555555;
+}
+
+.badge88 {
+  display: inline-block;
+  width: 88px;
+  height: 31px;
+  line-height: 31px;
+  margin: 3px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #336699;
+  border: 1px outset #6699cc;
+  text-decoration: none;
+}
+
+/* ---- footer ---------------------------------------------------------- */
+.footer {
+  clear: both;
+  background-color: #c0c0c0;
+  border-top: 3px groove #ffffff;
+  padding: 8px 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #333333;
+  text-align: center;
+}
+
+.footer a { color: #000080; }
+
+marquee { color: #800000; font-weight: bold; }
+
+/* ---- guestbook ------------------------------------------------------- */
+.gb-entry {
+  border: 2px groove #c0c0c0;
+  background-color: #fffff0;
+  padding: 8px 12px;
+  margin: 10px 0;
+}
+
+.gb-entry .gb-head {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  color: #555555;
+  border-bottom: 1px dotted #aaaaaa;
+  margin-bottom: 6px;
+  padding-bottom: 3px;
+}
+
+.gb-entry .gb-name { color: #800000; font-weight: bold; }
+
+/* responsive-ish fallback so it doesn't fully break on phones */
+@media (max-width: 780px) {
+  .page { width: auto; margin: 0; border-width: 0; }
+  .layout { flex-direction: column; }
+  .sidebar { flex-basis: auto; border-left: none; border-top: 2px groove #c0c0c0; }
+  .post-photo { float: none; width: auto; margin: 10px 0; }
+  .post-photo img { width: 100%; }
+}
